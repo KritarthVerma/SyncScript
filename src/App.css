@@ -62,7 +62,7 @@ footer a {
   background:#e85b2e ;
 }
 
-.joinBtn:hover {
+.joinBtn:hover, .leaveBtn:hover{
   background: #bd2c04;
 }
 
@@ -81,4 +81,55 @@ footer a {
 .createNewBtn:hover, footer a:hover{
   color :#bd2c04;
   border-color: #bd2c04;
+}
+
+.mainWrap {
+  display:grid;
+  grid-template-columns: 160px 1fr;
+  height: 100vh;
+}
+
+.aside {
+  background: #1c1e29;
+  padding: 16px;
+  color:#fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.asideInner {
+  flex:1;
+}
+
+.userName {
+  font-size: 10px;
+  margin-top: 7px;
+}
+
+.clientsList {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap:18px;
+}
+
+.client {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.logo {
+  border-bottom: 1px solid #424242;
+}
+
+.logoImage {
+  height: 45px;
+  margin-left:0;
+}
+
+.leaveBtn {
+  margin-top: 15px;
+  background: #e85b2e;
 }
