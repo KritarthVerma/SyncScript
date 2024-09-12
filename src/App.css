@@ -54,6 +54,7 @@ footer a {
   padding: 10px;
   border-radius: 5px;
   font-size: 13px;
+  font-weight: bold;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }  
@@ -102,7 +103,7 @@ footer a {
 }
 
 .userName {
-  font-size: 10px;
+  font-size: 12px;
   margin-top: 7px;
 }
 
@@ -132,4 +133,11 @@ footer a {
 .leaveBtn {
   margin-top: 15px;
   background: #e85b2e;
+}
+
+.CodeMirror {
+  min-height: calc(100vh - 20px);
+  font-size:18px;
+  line-height: 1.6;
+  padding-top: 20px;
 }

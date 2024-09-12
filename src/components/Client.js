@@ -6,8 +6,8 @@ const Client = ({key,username}) => {
     <div className='client'>
         <Avatar 
           name={username} 
-          size={30} 
-          round="9px"
+          size={35} 
+          round="50%"
         />
         <span className='userName'>{username}</span>
     </div>
