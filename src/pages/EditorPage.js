@@ -5,6 +5,7 @@ import Client from "../components/Client"
 import { initSocket } from '../socket';
 import ACTIONS from '../Actions';
 import { useLocation, useNavigate, Navigate, useParams } from 'react-router-dom';
+import SettingsBar from '../components/SettingsBar';
 
 const EditorPage = () => {
   const socketRef = useRef(null);
@@ -13,6 +14,9 @@ const EditorPage = () => {
   const reactNavigator = useNavigate();
   const {roomId} = useParams();
   const [clients,setClients] = useState([]);
+  const [language,setLanguage] = useState("cpp");
+  const [fontSize,setFontSize] = useState(18);
+  const [theme,setTheme] = useState("dark");
  
   useEffect(()=>{
     const init = async ()=>{
@@ -69,12 +73,32 @@ const EditorPage = () => {
   if(!location.state){
     return <Navigate to='/'/>
   }
+
+  const handleLanguageChange = (event)=>{
+    setLanguage(event.target.value);
+  }
+
+  const handleFontSizeChange = (event)=>{
+    setFontSize(event.target.value);
+  }
+
+  const handleThemeChange = (event)=>{
+    setTheme(event.target.value);
+  }
+
+  if(theme==="dark"){
+    document.documentElement.style.setProperty('--background-color','#1c1e29');
+    document.documentElement.style.setProperty('--text-color','#fff');
+  } else {
+    document.documentElement.style.setProperty('--background-color','#fff');
+    document.documentElement.style.setProperty('--text-color','#000');
+  }
   return (
-    <div className='mainWrap'>
-      <div className='aside'>
+    <div className="mainWrap">
+      <div className="aside">
         <div className='asideInner'>
           <div className='logo'>
-            <img className="logoImage" src='/logo.png' alt='logo'/>
+            <img className="logoImage" src='/logo2.png' alt='logo'/>
           </div>
           <h3>Connected</h3>
           <div className='clientsList'>
@@ -91,8 +115,26 @@ const EditorPage = () => {
         <button className='btn copyBtn' onClick={copyRoomId}>Copy Room ID</button>
         <button className='btn leaveBtn' onClick={leaveRoom}>Leave</button>
       </div>
-      <div className='editorWrap'>
-        <Editor socketRef={socketRef} roomId={roomId} onCodeChange={(code)=>{codeRef.current=code}}/>
+      <div className='editorBarWrap'>
+        <SettingsBar 
+            language={language} 
+            handleLanguageChange={handleLanguageChange}
+            fontSize={fontSize}
+            handleFontSizeChange={handleFontSizeChange}
+            theme={theme}
+            handleThemeChange={handleThemeChange}
+            
+        />
+        <div className='editorWrap'>
+        <Editor 
+            socketRef={socketRef} 
+            roomId={roomId} 
+            onCodeChange={(code)=>{codeRef.current=code}}
+            fontSize={fontSize}
+            theme={theme}
+            language={language}
+        />
+        </div>
       </div>
     </div>
   )
