@@ -1,6 +1,7 @@
 :root{
   --background-color:#1c1e29;
   --text-color:#fff;
+  --input-output-color : #282a36;
 }
 
 .homePageWrapper{
@@ -64,11 +65,11 @@ footer a {
   transition: all 0.2s ease-in-out;
 }  
 
-.joinBtn {
+.joinBtn,.runBtn {
   background:#e85b2e ;
 }
 
-.joinBtn:hover, .leaveBtn:hover{
+.joinBtn:hover, .leaveBtn:hover, .runBtn:hover{
   background: #bd2c04;
 }
 
@@ -91,7 +92,7 @@ footer a {
 
 .mainWrap {
   display: grid;
-  grid-template-columns: 12vw 1fr;
+  grid-template-columns: 12vw 53vw 1fr;
   height: 100vh;
   overflow: hidden;
 }
@@ -156,7 +157,7 @@ footer a {
 }
 
 .CodeMirror {
-  min-height: 91vh;
+  min-height: 92vh;
   line-height: 1.6;
 }
 
@@ -179,4 +180,52 @@ footer a {
 .fontSizeLabel {
   font-size: 13px;
   margin-right: 16px;
+}
+
+.inputOutputWrap {
+  border-left: 1px solid var(--text-color);
+}
+
+.inputWrap, .outputWrap{
+  height: 50vh;
+  border-bottom: 1px solid var(--text-color);
+}
+
+.inputHeading, .outputHeading {
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 16%;
+  background-color: var(--background-color);
+  border-left: 1px solid var(--text-color);
+}
+
+.inputConsole, .outputConsole {
+  height: 82%;
+  width: 100%;
+  background-color: var(--input-output-color);
+  color: var(--text-color);
+  padding: 0;
+}
+
+.code-input,.code-output{
+  width: 100%;
+  height: 100%;
+  resize: none;
+  background-color:var(--input-output-color);
+  color: var(--text-color);
+  padding: 5px;
+}
+
+.code-input:focus,.code-output:focus{
+  outline: none;
+}
+
+.runBtn {
+  position: absolute;
+  bottom: 15px;
+  right: 37vw;
+  width: 70px;
+  color : var(--text-color)
 }

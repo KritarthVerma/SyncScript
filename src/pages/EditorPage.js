@@ -3,9 +3,11 @@ import toast from 'react-hot-toast'
 import Editor from "../components/Editor"
 import Client from "../components/Client"
 import { initSocket } from '../socket';
-import ACTIONS from '../Actions';
+import ACTIONS, { LANGUAGE_CHANGE } from '../Actions';
 import { useLocation, useNavigate, Navigate, useParams } from 'react-router-dom';
 import SettingsBar from '../components/SettingsBar';
+import Input from '../components/Input';
+import Output from '../components/Output';
 
 const EditorPage = () => {
   const socketRef = useRef(null);
@@ -32,11 +34,12 @@ const EditorPage = () => {
         roomId,
         username:location.state?.username,
       });
-      socketRef.current.on(ACTIONS.JOINED,({clients,username,socketId})=>{
+      socketRef.current.on(ACTIONS.JOINED,({clients,username,socketId,language})=>{
         if(username !== location.state?.username){
           toast.success(`${username} joined the room`);
         }
         setClients(clients);
+        setLanguage(language);
         socketRef.current.emit(ACTIONS.SYNC_CODE,{
           code:codeRef.current,
           socketId
@@ -56,6 +59,14 @@ const EditorPage = () => {
       socketRef.current.disconnect();
     }
   },[])
+  
+  useEffect(()=>{
+    if(socketRef.current){
+      socketRef.current.on(ACTIONS.LANGUAGE_CHANGE,({language})=>{
+        setLanguage(language);
+      })
+    }
+  },[socketRef.current])
 
   async function copyRoomId(){
     try {
@@ -89,9 +100,11 @@ const EditorPage = () => {
   if(theme==="dark"){
     document.documentElement.style.setProperty('--background-color','#1c1e29');
     document.documentElement.style.setProperty('--text-color','#fff');
+    document.documentElement.style.setProperty('--input-output-color','#282a36');
   } else {
     document.documentElement.style.setProperty('--background-color','#fff');
     document.documentElement.style.setProperty('--text-color','#000');
+    document.documentElement.style.setProperty('--input-output-color','#f0f0f0');
   }
   return (
     <div className="mainWrap">
@@ -135,6 +148,10 @@ const EditorPage = () => {
             language={language}
         />
         </div>
+      </div>
+      <div className='inputOutputWrap'>
+        <Input/>
+        <Output/>
       </div>
     </div>
   )

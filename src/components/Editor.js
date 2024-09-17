@@ -43,6 +43,9 @@ const Editor = ({socketRef,roomId,onCodeChange,fontSize,theme,language}) => {
         const mode = getMode(language);
         editorRef.current.setOption('mode', { name: mode });
     }
+    if(socketRef.current){
+      socketRef.current.emit(ACTIONS.LANGUAGE_CHANGE,{roomId,language})
+    }
   },[language])
   useEffect(() => {
     if (editorRef.current) {
@@ -73,7 +76,10 @@ const Editor = ({socketRef,roomId,onCodeChange,fontSize,theme,language}) => {
     }
   }
   return (
-    <textarea id='realtimeEditor'>#Enter your code here</textarea>
+    <>
+      <textarea id='realtimeEditor'>#Enter your code here</textarea>
+      <button className='runBtn btn'>Run</button>
+    </>
   )
 }
 
