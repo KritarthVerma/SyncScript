@@ -60,6 +60,8 @@ const io = new Server(server);
 
 const userSocketMap = {}
 const roomLanguageMap = {}
+const roomInputMap = {}
+const roomOutputMap = {}
 const PORT = process.env.PORT || 5000;
 function getAllConnectedClients(roomId){
     return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map((socketId)=>{
@@ -97,6 +99,20 @@ io.on('connection',(socket)=>{
     socket.on(ACTIONS.LANGUAGE_CHANGE,({roomId,language})=>{
         roomLanguageMap[roomId] = language;
         socket.in(roomId).emit(ACTIONS.LANGUAGE_CHANGE,{language});
+    })
+    socket.on(ACTIONS.INPUT_CHANGE,({roomId,input})=>{
+        roomInputMap[roomId] = input;
+        socket.in(roomId).emit(ACTIONS.INPUT_CHANGE,{input});
+    })
+    socket.on(ACTIONS.SYNC_INPUT,({socketId,roomId})=>{
+        io.to(socketId).emit(ACTIONS.INPUT_CHANGE,{input:roomInputMap[roomId]});
+    })
+    socket.on(ACTIONS.OUTPUT_CHANGE,({roomId,output})=>{
+        roomOutputMap[roomId]=output;
+        socket.in(roomId).emit(ACTIONS.OUTPUT_CHANGE,{output});
+    })
+    socket.on(ACTIONS.SYNC_OUTPUT,({socketId,roomId})=>{
+        io.to(socketId).emit(ACTIONS.OUTPUT_CHANGE,{output:roomOutputMap[roomId]})
     })
     socket.on('disconnecting',()=>{
         const rooms = [...socket.rooms];

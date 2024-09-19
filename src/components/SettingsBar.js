@@ -2,7 +2,6 @@ import React from 'react'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { margin } from '@mui/system';
 
 const SettingsBar = ({language,handleLanguageChange,fontSize,handleFontSizeChange,theme,handleThemeChange}) => {
     const styles = {
@@ -14,8 +13,7 @@ const SettingsBar = ({language,handleLanguageChange,fontSize,handleFontSizeChang
         '.MuiSelect-icon': {
             color: `${theme==="dark"?"white":"black"}`,
         },
-        fontSize:"13px",
-        margin:"8px",
+        fontSize:"1vw",
     }
   return (
     <div className='settings-bar'>
@@ -33,8 +31,8 @@ const SettingsBar = ({language,handleLanguageChange,fontSize,handleFontSizeChang
             onChange={handleLanguageChange}
             sx={{
                 ...styles,
-                height:"35px",
-                width:"90px",
+                height:"5vh",
+                width:"7vw",
             }}
         >
             <MenuItem value="c">C</MenuItem>
@@ -68,8 +66,8 @@ const SettingsBar = ({language,handleLanguageChange,fontSize,handleFontSizeChang
             onChange={handleThemeChange}
             sx={{
                 ...styles,
-                height:"35px",
-                width:"90px",
+                height:"5vh",
+                width:"7vw",
             }}
         >
             <MenuItem value="dark">Dark</MenuItem>
@@ -77,7 +75,7 @@ const SettingsBar = ({language,handleLanguageChange,fontSize,handleFontSizeChang
         </Select>
       </div>
     </div>
-  )
+)
 }
 
 export default SettingsBar

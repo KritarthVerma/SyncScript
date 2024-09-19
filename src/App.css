@@ -123,6 +123,22 @@ footer a {
   align-items: center;
   flex-wrap: wrap;
   gap:18px;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+.clientsList::-webkit-scrollbar {
+  width: 5px;
+  height: 50%;
+}
+
+.clientsList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.clientsList::-webkit-scrollbar-thumb {
+  background: rgba(100,100,100,0.3);
+  border-radius: 4px;
 }
 
 .client {
@@ -139,9 +155,10 @@ footer a {
 .logoImage {
   height: 35px;
   width: 58px;
-  margin-top: 8px;
-  margin-left: 32px;
-  margin-bottom: 4px;
+  margin-top: 8%;
+  margin-left: 22%;
+  margin-bottom: 2%;
+  object-fit: contain;
 }
 
 .leaveBtn {
@@ -162,6 +179,8 @@ footer a {
 .CodeMirror {
   min-height: 92vh;
   line-height: 1.6;
+  scrollbar-width:thin !important;
+  scrollbar-color: rgba(100,100,100,0.3) transparent;
 }
 
 .settings-bar {
@@ -178,11 +197,12 @@ footer a {
 .languageSelect,.themeSelect,.fontSizeSelect {
   display: flex;
   align-items: center;
+  width: 30%;
 }
 
 .fontSizeLabel {
-  font-size: 13px;
-  margin-right: 16px;
+  font-size: 0.8rem;
+  margin-right: 10px;
 }
 
 .inputOutputWrap {
@@ -241,4 +261,8 @@ footer a {
   height: 30px;
   color: var(--text-color);
   text-align : center;
+}
+
+input[type="range"]{
+  width: 60%;
 }

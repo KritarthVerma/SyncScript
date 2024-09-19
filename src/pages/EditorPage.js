@@ -43,9 +43,20 @@ const EditorPage = () => {
         setLanguage(language);
         socketRef.current.emit(ACTIONS.SYNC_CODE,{
           code:codeRef.current,
-          socketId
+          socketId,
+        })
+        socketRef.current.emit(ACTIONS.SYNC_INPUT,{
+          socketId,
+          roomId,
+        })
+        socketRef.current.emit(ACTIONS.SYNC_OUTPUT,{
+          socketId,
+          roomId,
         })
       });
+      socketRef.current.on(ACTIONS.LANGUAGE_CHANGE,({language})=>{
+        setLanguage(language);
+      })
       socketRef.current.on(ACTIONS.DISCONNECTED,({socketId,username})=>{
         toast.success(`${username} left the room`);
         setClients((prev)=>{
@@ -56,18 +67,14 @@ const EditorPage = () => {
     init();
     return ()=>{
       socketRef.current.off(ACTIONS.JOINED);
+      socketRef.current.off(ACTIONS.LANGUAGE_CHANGE);
+      socketRef.current.off(ACTIONS.CODE_CHANGE);
+      socketRef.current.off(ACTIONS.INPUT_CHANGE);
+      socketRef.current.off(ACTIONS.OUTPUT_CHANGE);
       socketRef.current.off(ACTIONS.DISCONNECTED);
       socketRef.current.disconnect();
     }
   },[])
-
-  useEffect(()=>{
-    if(socketRef.current){
-      socketRef.current.on(ACTIONS.LANGUAGE_CHANGE,({language})=>{
-        setLanguage(language);
-      })
-    }
-  },[socketRef.current])
 
   async function copyRoomId(){
     try {
@@ -110,10 +117,10 @@ const EditorPage = () => {
   return (
     <div className="mainWrap">
       <div className="aside">
-        <div className='asideInner'>
-          <div className='logo'>
+        <div className='logo'>
             <img className="logoImage" src='/logo2.png' alt='logo'/>
-          </div>
+        </div>
+        <div className='asideInner'>
           <h3>Connected</h3>
           <div className='clientsList'>
             {
@@ -151,8 +158,14 @@ const EditorPage = () => {
         </div>
       </div>
       <div className='inputOutputWrap'>
-        <Input onInputChange={(input)=>{inputRef.current=input}}/>
+        <Input 
+            inputRef={inputRef}
+            socketRef={socketRef}
+            roomId={roomId}
+        />
         <Output 
+            socketRef={socketRef}
+            roomId={roomId}
             inputRef={inputRef}
             codeRef={codeRef}
             language={language}
