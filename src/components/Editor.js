@@ -78,7 +78,6 @@ const Editor = ({socketRef,roomId,onCodeChange,fontSize,theme,language}) => {
   return (
     <>
       <textarea id='realtimeEditor'>#Enter your code here</textarea>
-      <button className='runBtn btn'>Run</button>
     </>
   )
 }

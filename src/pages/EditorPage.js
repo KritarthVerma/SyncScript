@@ -12,6 +12,7 @@ import Output from '../components/Output';
 const EditorPage = () => {
   const socketRef = useRef(null);
   const codeRef = useRef(null);
+  const inputRef = useRef(null);
   const location = useLocation();
   const reactNavigator = useNavigate();
   const {roomId} = useParams();
@@ -59,7 +60,7 @@ const EditorPage = () => {
       socketRef.current.disconnect();
     }
   },[])
-  
+
   useEffect(()=>{
     if(socketRef.current){
       socketRef.current.on(ACTIONS.LANGUAGE_CHANGE,({language})=>{
@@ -150,8 +151,12 @@ const EditorPage = () => {
         </div>
       </div>
       <div className='inputOutputWrap'>
-        <Input/>
-        <Output/>
+        <Input onInputChange={(input)=>{inputRef.current=input}}/>
+        <Output 
+            inputRef={inputRef}
+            codeRef={codeRef}
+            language={language}
+        />
       </div>
     </div>
   )

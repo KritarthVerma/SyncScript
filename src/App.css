@@ -56,6 +56,9 @@ footer a {
 }
 
 .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
   padding: 10px;
   border-radius: 5px;
@@ -65,11 +68,11 @@ footer a {
   transition: all 0.2s ease-in-out;
 }  
 
-.joinBtn,.runBtn {
+.joinBtn,.runBtn,.clearBtn {
   background:#e85b2e ;
 }
 
-.joinBtn:hover, .leaveBtn:hover, .runBtn:hover{
+.joinBtn:hover, .leaveBtn:hover, .runBtn:hover, .clearBtn:hover{
   background: #bd2c04;
 }
 
@@ -136,9 +139,9 @@ footer a {
 .logoImage {
   height: 35px;
   width: 58px;
-  margin-top: 13px;
+  margin-top: 8px;
   margin-left: 32px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .leaveBtn {
@@ -228,4 +231,14 @@ footer a {
   right: 37vw;
   width: 70px;
   color : var(--text-color)
+}
+
+.clearBtn {
+  position: absolute;
+  bottom: 15px;
+  right: 1.5vw;
+  width: 70px;
+  height: 30px;
+  color: var(--text-color);
+  text-align : center;
 }
