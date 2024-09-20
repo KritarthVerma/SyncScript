@@ -14,7 +14,7 @@ const Output = ({socketRef,roomId,inputRef,codeRef,language}) => {
       socketRef.current.emit(ACTIONS.LOADING_CHANGE,{roomId});
     }
     if(codeRef.current==="")return;
-    Axios.post(`http://localhost:5001/compile`, {
+    Axios.post(`${process.env.REACT_APP_BACKEND_URL}/compile`, {
             code: codeRef.current,
             language,
             input: inputRef.current
