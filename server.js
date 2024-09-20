@@ -8,6 +8,10 @@ const Axios = require("axios");
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static('build'));
+app.use((req,res,next)=>{
+    res.sendFile(path.join(__dirname,'build','index.html'));
+})
 
 app.post("/compile",(req,res)=>{
     const code = req.body.code;
