@@ -5,13 +5,10 @@ const {Server} = require('socket.io');
 const ACTIONS = require("./src/Actions");
 const cors = require('cors');
 const Axios = require("axios");
+const path = require("path");
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('build'));
-app.use((req,res,next)=>{
-    res.sendFile(path.join(__dirname,'build','index.html'));
-})
 
 app.post("/compile",(req,res)=>{
     const code = req.body.code;
@@ -132,6 +129,11 @@ io.on('connection',(socket)=>{
         delete userSocketMap[socket.id];
         socket.leave();
     })
+})
+
+app.use(express.static('build'));
+app.use((req,res,next)=>{
+    res.sendFile(path.join(__dirname,'build','index.html'));
 })
 
 server.listen(PORT,()=>console.log(`Listening on PORT ${PORT}`));
