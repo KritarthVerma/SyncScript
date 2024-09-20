@@ -212,24 +212,37 @@ footer a {
 .inputWrap, .outputWrap{
   height: 50vh;
   border-bottom: 1px solid var(--text-color);
+  display: flex;
+  flex-direction: column;
 }
+
+
 
 .inputHeading, .outputHeading {
   color: var(--text-color);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 16%;
+  height: 18%;
   background-color: var(--background-color);
   border-left: 1px solid var(--text-color);
+  border-bottom: 1px solid var(--text-color);
 }
 
 .inputConsole, .outputConsole {
-  height: 82%;
+  height: 84%;
   width: 100%;
   background-color: var(--input-output-color);
   color: var(--text-color);
   padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: 40%;
+  height: 40%;
 }
 
 .code-input,.code-output{

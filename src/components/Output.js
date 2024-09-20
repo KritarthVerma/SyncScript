@@ -5,9 +5,14 @@ import ACTIONS from '../Actions';
 import { useRef } from 'react';
 
 const Output = ({socketRef,roomId,inputRef,codeRef,language}) => {
+  const [loading,setLoading] = useState(false);
   const [output, setOutput] = useState("");
   const outputRef = useRef(output);
   const compileCode = ()=>{
+    setLoading(true);
+    if(socketRef.current){
+      socketRef.current.emit(ACTIONS.LOADING_CHANGE,{roomId});
+    }
     if(codeRef.current==="")return;
     Axios.post(`http://localhost:5001/compile`, {
             code: codeRef.current,
@@ -16,9 +21,11 @@ const Output = ({socketRef,roomId,inputRef,codeRef,language}) => {
         }).then((res) => {
             outputRef.current = res.data.stdout || res.data.stderr;
             setOutput(res.data.stdout || res.data.stderr)
+            setLoading(false);
         }).catch((err) => {
             outputRef.current = "Error: " + err.response ? err.response.data.error : err.message;
             setOutput("Error: " + err.response ? err.response.data.error : err.message)
+            setLoading(false);
         });
   }
   useEffect(()=>{
@@ -31,8 +38,12 @@ const Output = ({socketRef,roomId,inputRef,codeRef,language}) => {
   },[outputRef.current]);
   useEffect(()=>{
     if(socketRef.current){
+      socketRef.current.on(ACTIONS.LOADING_CHANGE,()=>{
+        setLoading(true);
+      })
       socketRef.current.on(ACTIONS.OUTPUT_CHANGE,({output})=>{
         setOutput(output);
+        setLoading(false);
         outputRef.current = output;
       });
     }
@@ -47,18 +58,22 @@ const Output = ({socketRef,roomId,inputRef,codeRef,language}) => {
         <h2>Output</h2>
       </div>
       <div className='outputConsole'>
-        <textarea value={outputRef.current} className='code-output' readOnly></textarea>
+        {loading?(
+            <img className="loader" src="/loading.svg" alt="Loading.."/>
+        ):(<>
+          <textarea value={outputRef.current} className='code-output' readOnly></textarea>
+          <button 
+              onClick={clearConsole}
+              className='clearBtn btn'>
+                Clear
+          </button>
+          <button 
+              onClick={compileCode}
+              className='runBtn btn'>
+                Run
+          </button>
+        </>)}
       </div>
-      <button 
-          onClick={compileCode}
-          className='runBtn btn'>
-            Run
-      </button>
-      <button 
-          onClick={clearConsole}
-          className='clearBtn btn'>
-            Clear
-      </button>
     </div>
   )
 }

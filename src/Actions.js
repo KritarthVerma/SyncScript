@@ -9,6 +9,7 @@ const ACTIONS = {
     SYNC_INPUT : 'sync-input',
     OUTPUT_CHANGE : 'output-change',
     SYNC_OUTPUT : 'sync-output',
+    LOADING_CHANGE : 'loading-change',
 };
 
 module.exports = ACTIONS;
