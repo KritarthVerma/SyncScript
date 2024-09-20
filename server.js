@@ -115,8 +115,8 @@ io.on('connection',(socket)=>{
     socket.on(ACTIONS.SYNC_OUTPUT,({socketId,roomId})=>{
         io.to(socketId).emit(ACTIONS.OUTPUT_CHANGE,{output:roomOutputMap[roomId]})
     })
-    socket.on(ACTIONS.LOADING_CHANGE,({roomId})=>{
-        socket.in(roomId).emit(ACTIONS.LOADING_CHANGE,{});
+    socket.on(ACTIONS.LOADING_CHANGE,({roomId,loading})=>{
+        socket.in(roomId).emit(ACTIONS.LOADING_CHANGE,{loading});
     })
     socket.on('disconnecting',()=>{
         const rooms = [...socket.rooms];

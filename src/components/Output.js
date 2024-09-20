@@ -10,9 +10,7 @@ const Output = ({socketRef,roomId,inputRef,codeRef,language}) => {
   const outputRef = useRef(output);
   const compileCode = ()=>{
     setLoading(true);
-    if(socketRef.current){
-      socketRef.current.emit(ACTIONS.LOADING_CHANGE,{roomId});
-    }
+    socketRef.current.emit(ACTIONS.LOADING_CHANGE,{roomId,loading:true});
     if(codeRef.current==="")return;
     Axios.post(`${process.env.REACT_APP_BACKEND_URL}/compile`, {
             code: codeRef.current,
@@ -21,10 +19,12 @@ const Output = ({socketRef,roomId,inputRef,codeRef,language}) => {
         }).then((res) => {
             outputRef.current = res.data.stdout || res.data.stderr;
             setOutput(res.data.stdout || res.data.stderr)
+            socketRef.current.emit(ACTIONS.LOADING_CHANGE,{roomId,loading:false});
             setLoading(false);
         }).catch((err) => {
             outputRef.current = "Error: " + err.response ? err.response.data.error : err.message;
             setOutput("Error: " + err.response ? err.response.data.error : err.message)
+            socketRef.current.emit(ACTIONS.LOADING_CHANGE,{roomId,loading:false});
             setLoading(false);
         });
   }
@@ -38,8 +38,8 @@ const Output = ({socketRef,roomId,inputRef,codeRef,language}) => {
   },[outputRef.current]);
   useEffect(()=>{
     if(socketRef.current){
-      socketRef.current.on(ACTIONS.LOADING_CHANGE,()=>{
-        setLoading(true);
+      socketRef.current.on(ACTIONS.LOADING_CHANGE,({loading})=>{
+        setLoading(loading);
       })
       socketRef.current.on(ACTIONS.OUTPUT_CHANGE,({output})=>{
         setOutput(output);
