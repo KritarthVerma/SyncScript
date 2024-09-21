@@ -63,6 +63,7 @@ const userSocketMap = {}
 const roomLanguageMap = {}
 const roomInputMap = {}
 const roomOutputMap = {}
+const roomUserCount = {}
 const PORT = process.env.PORT || 5000;
 function getAllConnectedClients(roomId){
     return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map((socketId)=>{
@@ -76,6 +77,7 @@ function getAllConnectedClients(roomId){
 io.on('connection',(socket)=>{
     console.log("socket connected",socket.id);
     socket.on(ACTIONS.JOIN,({roomId,username})=>{
+        roomUserCount[roomId] = (roomUserCount[roomId] || 0) + 1;
         userSocketMap[socket.id]=username;
         socket.join(roomId);
         const clients = getAllConnectedClients(roomId);
@@ -125,6 +127,13 @@ io.on('connection',(socket)=>{
                 socketId:socket.id,
                 username:userSocketMap[socket.id],
             })
+            roomUserCount[roomId]--;
+            if (roomUserCount[roomId] === 0) {
+                delete roomLanguageMap[roomId];
+                delete roomInputMap[roomId];
+                delete roomOutputMap[roomId];
+                delete roomUserCount[roomId];
+            }
         })
         delete userSocketMap[socket.id];
         socket.leave();
