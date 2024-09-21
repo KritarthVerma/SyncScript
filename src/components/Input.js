@@ -1,20 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef } from 'react'
 import ACTIONS from '../Actions'
 
 const Input = ({inputRef,socketRef,roomId}) => {
   const [input,setInput] = useState("");
+  const isInputChangeFromRemote = useRef(false);
   useEffect(()=>{
     if(socketRef.current){
       socketRef.current.on(ACTIONS.INPUT_CHANGE,({input})=>{
+        isInputChangeFromRemote.current = true;
         inputRef.current=input;
         setInput(input);
       })
     }
   },[socketRef.current])
   useEffect(()=>{
-    if(socketRef.current){
-      inputRef.current=input;
-      socketRef.current.emit(ACTIONS.INPUT_CHANGE,{roomId,input:input})
+    if (socketRef.current && !isInputChangeFromRemote.current) {
+      inputRef.current = input;
+      socketRef.current.emit(ACTIONS.INPUT_CHANGE, { roomId, input });
+    } else {
+      isInputChangeFromRemote.current = false;
     }
   },[input])
   return (
