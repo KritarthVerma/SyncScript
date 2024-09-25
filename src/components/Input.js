@@ -3,7 +3,7 @@ import ACTIONS from '../Actions'
 
 const Input = ({inputRef,socketRef,roomId}) => {
   const [input,setInput] = useState("");
-  const isInputChangeFromRemote = useRef(false);
+  const isInputChangeFromRemote = useRef(true);
   useEffect(()=>{
     if(socketRef.current){
       socketRef.current.on(ACTIONS.INPUT_CHANGE,({input})=>{

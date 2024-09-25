@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import Editor from "../components/Editor"
-import Client from "../components/Client"
 import { initSocket } from '../socket';
 import ACTIONS, { LANGUAGE_CHANGE } from '../Actions';
 import { useLocation, useNavigate, Navigate, useParams } from 'react-router-dom';
 import SettingsBar from '../components/SettingsBar';
 import Input from '../components/Input';
 import Output from '../components/Output';
+import Aside from '../components/Aside';
 
 const EditorPage = () => {
   const socketRef = useRef(null);
@@ -76,15 +76,6 @@ const EditorPage = () => {
     }
   },[])
 
-  async function copyRoomId(){
-    try {
-      await navigator.clipboard.writeText(roomId);
-      toast.success("Room ID copied successfully!");
-    } catch (error) {
-      toast.error("Failed to copy Room ID!");
-    }
-  }
-
   function leaveRoom() {
     reactNavigator("/");
   }
@@ -116,26 +107,11 @@ const EditorPage = () => {
   }
   return (
     <div className="mainWrap">
-      <div className="aside">
-        <div className='logo'>
-            <img className="logoImage" src='/logo2.png' alt='logo'/>
-        </div>
-        <div className='asideInner'>
-          <h3>Connected</h3>
-          <div className='clientsList'>
-            {
-              clients.map((client)=>(
-                <Client
-                  key={client.socketId} 
-                  username={client.username}
-                />
-              ))
-            }
-          </div>
-        </div>
-        <button className='btn copyBtn' onClick={copyRoomId}>Copy Room ID</button>
-        <button className='btn leaveBtn' onClick={leaveRoom}>Leave</button>
-      </div>
+      <Aside
+        leaveRoom={leaveRoom}
+        roomId={roomId}
+        clients={clients}
+      />
       <div className='editorBarWrap'>
         <SettingsBar 
             language={language} 
