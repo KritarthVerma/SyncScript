@@ -16,10 +16,10 @@ const EditorPage = () => {
   const location = useLocation();
   const reactNavigator = useNavigate();
   const {roomId} = useParams();
-  const [clients,setClients] = useState([]);
   const [language,setLanguage] = useState("cpp");
   const [fontSize,setFontSize] = useState(18);
   const [theme,setTheme] = useState("dark");
+  const [clients,setClients] = useState([]);
  
   useEffect(()=>{
     const init = async ()=>{
@@ -60,7 +60,7 @@ const EditorPage = () => {
       socketRef.current.on(ACTIONS.DISCONNECTED,({socketId,username})=>{
         toast.success(`${username} left the room`);
         setClients((prev)=>{
-          return prev.filter(client=>client.socketId !== socketId);
+            return prev.filter(client=>client.socketId !== socketId);
         })
       })
     }
@@ -107,12 +107,7 @@ const EditorPage = () => {
   }
   return (
     <div className="mainWrap">
-      <Aside
-        leaveRoom={leaveRoom}
-        roomId={roomId}
-        clients={clients}
-      />
-      <div className='editorBarWrap'>
+      <div className='asideEditorBarWrap'>
         <SettingsBar 
             language={language} 
             handleLanguageChange={handleLanguageChange}
@@ -122,15 +117,22 @@ const EditorPage = () => {
             handleThemeChange={handleThemeChange}
             
         />
-        <div className='editorWrap'>
-        <Editor 
-            socketRef={socketRef} 
-            roomId={roomId} 
-            onCodeChange={(code)=>{codeRef.current=code}}
-            fontSize={fontSize}
-            theme={theme}
-            language={language}
-        />
+        <div className='asideEditorWrap'>
+          <Aside
+            clients={clients}
+            leaveRoom={leaveRoom}
+            roomId={roomId}
+          />
+          <div className='editorWrap'>
+            <Editor 
+                socketRef={socketRef} 
+                roomId={roomId} 
+                onCodeChange={(code)=>{codeRef.current=code}}
+                fontSize={fontSize}
+                theme={theme}
+                language={language}
+            />
+          </div>
         </div>
       </div>
       <div className='inputOutputWrap'>

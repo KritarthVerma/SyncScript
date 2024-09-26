@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Client from "../components/Client"
 import toast from 'react-hot-toast';
+import Badge from '@mui/material/Badge';
 
-const Aside = ({leaveRoom,roomId,clients}) => {
+const Aside = ({clients,leaveRoom,roomId}) => {
   async function copyRoomId(){
     try {
       await navigator.clipboard.writeText(roomId);
@@ -13,11 +14,11 @@ const Aside = ({leaveRoom,roomId,clients}) => {
   }
   return (
     <div className="aside">
-        <div className='logo'>
-            <img className="logoImage" src='/logo2.png' alt='logo'/>
-        </div>
         <div className='asideInner'>
-          <h3>Connected</h3>
+          <div className='connected'>
+            <h4>Connected&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+            <Badge color="primary" badgeContent={clients.length} showZero/>
+          </div>
           <div className='clientsList'>
             {
               clients.map((client)=>(

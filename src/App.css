@@ -95,12 +95,13 @@ footer a {
 
 .mainWrap {
   display: grid;
-  grid-template-columns: 12vw 53vw 1fr;
+  grid-template-columns: 68vw 1fr;
   height: 100vh;
   overflow: hidden;
 }
 
 .aside {
+  width: 120px;
   padding: 16px;
   padding-top: 0px;
   background: var(--background-color);
@@ -111,6 +112,12 @@ footer a {
 
 .asideInner {
   flex:1;
+}
+
+.connected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .userName {
@@ -148,32 +155,19 @@ footer a {
   font-weight: bold;
 }
 
-.logo {
-  border-bottom: 1px solid #424242;
-}
-
-.logoImage {
-  height: 35px;
-  width: 58px;
-  margin-top: 8%;
-  margin-left: 22%;
-  margin-bottom: 2%;
-  object-fit: contain;
-}
-
 .leaveBtn {
   margin-top: 15px;
   background: #e85b2e;
   color: var(--text-color);
 }
 
-.editorBarWrap {
+.asideEditorWrap{
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  height: 100vh;
-  overflow: hidden;
-  border-left: 1px solid var(--text-color);
+  width: 100%;
+}
+
+.editorWrap{
+  flex:1;
 }
 
 .CodeMirror {
@@ -185,13 +179,32 @@ footer a {
 
 .settings-bar {
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
   height: 9vh;
   width: 100%;
   color:var(--text-color);
   background-color: var(--background-color);
   border-bottom: 1px solid var(--text-color);
+}
+
+.logo {
+  width: 20%;
+}
+
+.logoImage {
+  height: 35px;
+  width: 58px;
+  margin-top: 6%;
+  margin-left: 22%;
+  margin-bottom: 4%;
+  object-fit: contain;
+}
+
+.selectOptions {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex:1;
 }
 
 .languageSelect,.themeSelect,.fontSizeSelect {
@@ -207,6 +220,7 @@ footer a {
 
 .inputOutputWrap {
   border-left: 1px solid var(--text-color);
+  flex:1;
 }
 
 .inputWrap, .outputWrap{
