@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import Editor from "../components/Editor"
 import { initSocket } from '../socket';
-import ACTIONS, { LANGUAGE_CHANGE } from '../Actions';
+import ACTIONS from '../Actions';
 import { useLocation, useNavigate, Navigate, useParams } from 'react-router-dom';
 import SettingsBar from '../components/SettingsBar';
 import Input from '../components/Input';
@@ -108,7 +108,7 @@ const EditorPage = () => {
   return (
     <div className="mainWrap">
       <div className='asideEditorBarWrap'>
-        <SettingsBar 
+        <SettingsBar
             language={language} 
             handleLanguageChange={handleLanguageChange}
             fontSize={fontSize}

@@ -97,11 +97,11 @@ footer a {
   display: grid;
   grid-template-columns: 68vw 1fr;
   height: 100vh;
-  overflow: hidden;
+  overflow:hidden;
 }
 
 .aside {
-  width: 120px;
+  min-width: 5vw;
   padding: 16px;
   padding-top: 0px;
   background: var(--background-color);
@@ -163,24 +163,26 @@ footer a {
 
 .asideEditorWrap{
   display: flex;
-  width: 100%;
+  width: 68vw;
 }
 
 .editorWrap{
+  overflow: auto;
   flex:1;
 }
 
 .CodeMirror {
-  min-height: 92vh;
+  min-height: 91vh;
   line-height: 1.6;
-  scrollbar-width:thin !important;
-  scrollbar-color: rgba(100,100,100,0.3) transparent;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(100, 100, 100, 0.3) transparent;
 }
 
 .settings-bar {
   display: flex;
   align-items: center;
   height: 9vh;
+  min-height: 9vh;
   width: 100%;
   color:var(--text-color);
   background-color: var(--background-color);
@@ -292,4 +294,10 @@ footer a {
 
 input[type="range"]{
   width: 60%;
+}
+
+.optionsContainer{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
