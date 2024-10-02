@@ -4,7 +4,6 @@ import Editor from "../components/Editor"
 import { initSocket } from '../socket';
 import ACTIONS from '../Actions';
 import { useLocation, useNavigate, Navigate, useParams } from 'react-router-dom';
-import SettingsBar from '../components/SettingsBar';
 import Input from '../components/Input';
 import Output from '../components/Output';
 import Aside from '../components/Aside';
