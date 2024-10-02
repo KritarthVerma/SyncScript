@@ -8,6 +8,7 @@ import SettingsBar from '../components/SettingsBar';
 import Input from '../components/Input';
 import Output from '../components/Output';
 import Aside from '../components/Aside';
+import Bar from '../components/Bar';
 
 const EditorPage = () => {
   const socketRef = useRef(null);
@@ -108,8 +109,7 @@ const EditorPage = () => {
   return (
     <div className="mainWrap">
       <div className='asideEditorBarWrap'>
-        <SettingsBar
-            language={language} 
+        <Bar
             handleLanguageChange={handleLanguageChange}
             fontSize={fontSize}
             handleFontSizeChange={handleFontSizeChange}
