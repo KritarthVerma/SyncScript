@@ -19,10 +19,23 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Slider from '@mui/material/Slider';
-
+import PersonIcon from '@mui/icons-material/Person';
+import Badge from '@mui/material/Badge';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { Tooltip } from '@mui/material';
 
 function Bar(props) {
-  const { window,handleLanguageChange,handleFontSizeChange,fontSize,handleThemeChange,theme } = props;
+  const { window,
+    handleLanguageChange,
+    handleFontSizeChange,
+    fontSize,
+    handleThemeChange,
+    theme,
+    clients,
+    leaveRoom,
+    copyRoomId,
+  } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false);
   const [openFontSizeDialog, setOpenFontSizeDialog] = useState(false);
@@ -119,41 +132,112 @@ function Bar(props) {
       <CssBaseline />
       <AppBar component="nav"
             sx={{width:"100%",
+                height:"9vh",
+                minHeight:"9vh",
                 position:"relative",
+                display:"flex",
+                justifyContent:"center",
                 backgroundColor:backgroundColor,
             }}>
         <Toolbar>
           <div className='logo'>
             <img className="logoImage" src='/logo2.png' alt='logo'/>
           </div>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ml:"auto",
-                mr: 0,
-                display: 'none',
-                '@media (max-width: 980px)': {
-                    display: 'block',
-                },
-            }}
-          >
-            <SettingsIcon sx={{color:textColor}}/>
-          </IconButton>
-          <Box sx={{width:"80%",
-                display: 'flex',
-                '@media (max-width: 980px)': {
+          <Box sx={{
+              display:"flex",
+              ml:"auto"
+            }}>
+            <Tooltip title="Participants">
+              <span>
+                <IconButton 
+                  size="small"
+                  color="inherit" 
+                  aria-label="Participants"
+                  sx={{
+                    m:"7px",
                     display: 'none',
-                },
-                justifyContent:"space-evenly"
+                    '@media (max-width: 900px)': {
+                      display: 'block',
+                    },
+                  }}
+                  disabled
+                >
+                  <Badge 
+                    badgeContent={clients.length}
+                    color="primary"
+                  >
+                    <PersonIcon 
+                      fontSize="inherit"
+                      sx={{
+                        color: textColor,
+                      }}
+                    />
+                  </Badge>
+                </IconButton>
+              </span>
+            </Tooltip>
+            <Tooltip title="Copy Room ID">
+              <IconButton
+                size="small"
+                color="inherit" 
+                aria-label="Copy Room ID" 
+                sx={{
+                  m:"7px",
+                  display: 'none',
+                  '@media (max-width: 900px)': {
+                    display: 'block',
+                  },
                 }}
-            >
-            {navItems.map((item) => (
-              <Button key={item.label} sx={{color: textColor }} onClick={item.action}>
-                {item.label}
-              </Button>
-            ))}
+                onClick={copyRoomId}
+              >
+                <ContentCopyIcon 
+                  fontSize="inherit"
+                  sx={{
+                    color:textColor,
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Leave Room">
+              <IconButton
+                size="small"
+                color="inherit" 
+                aria-label="Leave Room" 
+                sx={{
+                  m:"7px",
+                  display: 'none',
+                  '@media (max-width: 900px)': {
+                    display: 'block',
+                  },
+                }}
+                onClick={leaveRoom}
+              >
+                <LogoutIcon 
+                  fontSize="inherit"
+                  sx={{
+                    color:textColor,
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Settings">
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{
+                    m:"7px",
+                }}
+              >
+                <SettingsIcon 
+                  fontSize="small"
+                  sx={{
+                      color:textColor,
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
           </Box>
         </Toolbar>
       </AppBar>
@@ -170,10 +254,6 @@ function Bar(props) {
             keepMounted: true,
           }}
           sx={{
-            display: 'none',
-            '@media (max-width: 980px)': {
-                display: 'block',
-            },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
         >

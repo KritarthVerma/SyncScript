@@ -80,6 +80,15 @@ const EditorPage = () => {
     reactNavigator("/");
   }
 
+  async function copyRoomId(){
+    try {
+      await navigator.clipboard.writeText(roomId);
+      toast.success("Room ID copied successfully!");
+    } catch (error) {
+      toast.error("Failed to copy Room ID!");
+    }
+  }
+
   if(!location.state){
     return <Navigate to='/'/>
   }
@@ -114,6 +123,9 @@ const EditorPage = () => {
             handleFontSizeChange={handleFontSizeChange}
             theme={theme}
             handleThemeChange={handleThemeChange}
+            clients={clients}
+            leaveRoom={leaveRoom}
+            copyRoomId={copyRoomId}
             
         />
         <div className='asideEditorWrap'>
@@ -121,6 +133,7 @@ const EditorPage = () => {
             clients={clients}
             leaveRoom={leaveRoom}
             roomId={roomId}
+            copyRoomId={copyRoomId}
           />
           <div className='editorWrap'>
             <Editor 

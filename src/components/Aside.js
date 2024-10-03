@@ -3,15 +3,7 @@ import Client from "../components/Client"
 import toast from 'react-hot-toast';
 import Badge from '@mui/material/Badge';
 
-const Aside = ({clients,leaveRoom,roomId}) => {
-  async function copyRoomId(){
-    try {
-      await navigator.clipboard.writeText(roomId);
-      toast.success("Room ID copied successfully!");
-    } catch (error) {
-      toast.error("Failed to copy Room ID!");
-    }
-  }
+const Aside = ({clients,leaveRoom,copyRoomId}) => {
   return (
     <div className="aside">
         <div className='asideInner'>

@@ -110,6 +110,12 @@ footer a {
   flex-direction: column;
 }
 
+@media (max-width: 900px) {
+  .aside {
+    display: none;
+  }
+}
+
 .asideInner {
   flex:1;
 }
