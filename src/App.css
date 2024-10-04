@@ -101,6 +101,7 @@ footer a {
 }
 
 .aside {
+  max-width:11.2vw;
   min-width: 5vw;
   padding: 16px;
   padding-top: 0px;

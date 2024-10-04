@@ -40,6 +40,7 @@ function Bar(props) {
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false);
   const [openFontSizeDialog, setOpenFontSizeDialog] = useState(false);
   const [openThemeDialog, setOpenThemeDialog] = useState(false);
+  const [openParticipantsDialog,setOpenParticipantsDialog] = useState(false);
 
   const backgroundColor = `${theme==="dark"?"#1c1e29":"#fff"}`;
   const textColor = `${theme==="dark"?"white":"black"}`;
@@ -96,13 +97,21 @@ function Bar(props) {
     handleThemeChange(event);
     handleCloseThemeDialog();
   };
+  
+  const handleOpenParticipantsDialog = ()=>{
+    setOpenParticipantsDialog(true);
+  }
+
+  const handleCloseParticipantsDialog = ()=>{
+    setOpenParticipantsDialog(false);
+  }
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+    <Box onClick={handleDrawerToggle} sx={{textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
         Settings
       </Typography>
@@ -148,7 +157,6 @@ function Bar(props) {
               ml:"auto"
             }}>
             <Tooltip title="Participants">
-              <span>
                 <IconButton 
                   size="small"
                   color="inherit" 
@@ -160,7 +168,7 @@ function Bar(props) {
                       display: 'block',
                     },
                   }}
-                  disabled
+                  onClick={handleOpenParticipantsDialog}
                 >
                   <Badge 
                     badgeContent={clients.length}
@@ -174,7 +182,6 @@ function Bar(props) {
                     />
                   </Badge>
                 </IconButton>
-              </span>
             </Tooltip>
             <Tooltip title="Copy Room ID">
               <IconButton
@@ -254,7 +261,12 @@ function Bar(props) {
             keepMounted: true,
           }}
           sx={{
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { 
+              boxSizing: 'border-box',
+              width: drawerWidth,
+              backgroundColor:backgroundColor,
+              color:textColor,
+            },
           }}
         >
           {drawer}
@@ -263,7 +275,16 @@ function Bar(props) {
 
       {/*Dialog for Language Selection*/}
 
-      <Dialog open={openLanguageDialog} onClose={handleCloseLanguageDialog}>
+      <Dialog 
+        open={openLanguageDialog} 
+        onClose={handleCloseLanguageDialog}
+        sx={{
+          '& .MuiDialog-paper': {
+            backgroundColor:backgroundColor,
+            color:textColor,
+          },
+        }}
+      >
         <DialogTitle>Select Language</DialogTitle>
         <DialogContent>
           <List>
@@ -283,7 +304,16 @@ function Bar(props) {
 
       {/*Dialog for Font Size Selection*/}
 
-      <Dialog open={openFontSizeDialog} onClose={handleCloseFontSizeDialog}>
+      <Dialog 
+        open={openFontSizeDialog} 
+        onClose={handleCloseFontSizeDialog}
+        sx={{
+          '& .MuiDialog-paper': {
+            backgroundColor:backgroundColor,
+            color:textColor,
+          },
+        }}
+      >
         <DialogTitle>Select Font Size</DialogTitle>
         <DialogContent>
           <Slider
@@ -304,7 +334,16 @@ function Bar(props) {
 
       {/*Dialog for Theme Selection*/}
 
-      <Dialog open={openThemeDialog} onClose={handleCloseThemeDialog}>
+      <Dialog 
+        open={openThemeDialog} 
+        onClose={handleCloseThemeDialog}
+        sx={{
+          '& .MuiDialog-paper': {
+            backgroundColor:backgroundColor,
+            color:textColor,
+          },
+        }}
+      >
         <DialogTitle>Select Theme</DialogTitle>
         <DialogContent>
           <List>
@@ -320,6 +359,29 @@ function Bar(props) {
           <Button onClick={handleCloseThemeDialog} color="primary">
             Cancel
           </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/*Dialog for participants list*/}
+
+      <Dialog open={openParticipantsDialog} onClose={handleCloseParticipantsDialog} sx={{
+          '& .MuiDialog-paper': {
+            backgroundColor,
+            color: textColor,
+          },
+        }}>
+        <DialogTitle>Participants</DialogTitle>
+        <DialogContent>
+          <List>
+            {clients.map((client) => (
+              <ListItem key={client.socketId}>
+                <ListItemText primary={client.username} />
+              </ListItem>
+            ))}
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseParticipantsDialog} color="primary">Close</Button>
         </DialogActions>
       </Dialog>
     </Box>
